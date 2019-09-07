@@ -10,6 +10,7 @@ const getAllPosts = async (req, res) => {
 }
  
 const createPost = (req, res) => {
+  console.log(req.body)
     Post.create(req.body)
       .then(post => {
         res.status(200).send(post);

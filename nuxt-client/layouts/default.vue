@@ -2,11 +2,8 @@
   <v-app dark>
     <Drawer />
     <v-content>
-      <v-container>
-        <nuxt />
-      </v-container>
+      <nuxt />
     </v-content>
-
     <v-footer app>
       <span>&copy; 2019</span>
     </v-footer>

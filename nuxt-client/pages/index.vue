@@ -1,75 +1,140 @@
 <template>
-  <v-layout column justify-center align-center>
-    <v-flex xs12 sm8 md6>
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>
-            Vuetify is a progressive Material Design component framework for
-            Vue.js. It was designed to empower developers to create amazing
-            applications.
-          </p>
-          <p>
-            For more information on Vuetify, check out the
-            <a href="https://vuetifyjs.com" target="_blank"> documentation </a>.
-          </p>
-          <p>
-            If you have questions, please join the official
-            <a href="https://chat.vuetifyjs.com/" target="_blank" title="chat">
-              discord </a
-            >.
-          </p>
-          <p>
-            Find a bug? Report it on the github
-            <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              title="contribute"
-            >
-              issue board </a
-            >.
-          </p>
-          <p>
-            Thank you for developing with Vuetify and I look forward to bringing
-            more exciting features in the future.
-          </p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3" />
-          <a href="https://nuxtjs.org/" target="_blank">
-            Nuxt Documentation
-          </a>
-          <br />
-          <a href="https://github.com/nuxt/nuxt.js" target="_blank">
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire">
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-  </v-layout>
+  <v-container>
+    <v-layout justify-center align-center>
+      <v-flex v-for="(post, index) in posts" :key="index">
+        <v-card
+          class="mx-auto"
+          :flat="flat"
+          :loading="loading"
+          :outlined="outlined"
+          :elevation="elevation"
+          :raised="raised"
+          :width="width"
+          :height="height"
+        >
+          <v-img
+            v-if="media"
+            class="white--text"
+            height="200px"
+            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+          >
+            <v-card-title class="align-end fill-height">
+              I'm a title
+            </v-card-title>
+          </v-img>
+          <v-card-title v-else>
+            I'm a title
+          </v-card-title>
+          <v-card-text>{{ post.text }}</v-card-text>
+          <v-card-actions v-if="actions">
+            <v-btn outlined>
+              Click
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-flex>
+    </v-layout>
+    <v-layout justify-center align-center>
+      <v-flex v-for="(post, index) in postsMain" :key="index">
+        <v-card
+          class="mx-auto"
+          :flat="flat"
+          :loading="loading"
+          :outlined="outlined"
+          :elevation="elevation"
+          :raised="raised"
+          :width-main="widthMain"
+          :height="height"
+        >
+          <v-img
+            v-if="media"
+            class="white--text"
+            height="200px"
+            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+          >
+            <v-card-title class="align-end fill-height">
+              I'm a title
+            </v-card-title>
+          </v-img>
+          <v-card-title v-else>
+            I'm a title
+          </v-card-title>
+          <v-card-text>{{ post.text }}</v-card-text>
+          <v-card-actions v-if="actions">
+            <v-btn outlined>
+              Click
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
-
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
-
+import { mapActions } from 'vuex'
 export default {
-  components: {
-    Logo,
-    VuetifyLogo
+  data: () => ({
+    flat: false,
+    media: true,
+    loading: false,
+    actions: true,
+    outlined: false,
+    elevation: undefined,
+    raised: false,
+    width: 344,
+    widthMain: 600,
+    height: undefined,
+    posts: [
+      {
+        text: 111
+      },
+      {
+        text: 222
+      },
+      {
+        text: 333
+      },
+      {
+        text: 444
+      }
+    ],
+    postsMain: [
+      {
+        text: 111
+      },
+      {
+        text: 333
+      },
+      {
+        text: 444
+      }
+    ]
+  }),
+  mounted() {
+    this.getPosts()
+  },
+  // async asyncData({$axios, params}) {
+  //   const user = await $axios.$get('https://jsonplaceholder.typicode.com/users/' + params.id)
+  //   return {user}
+  // },
+  methods: {
+    ...mapActions({ getAllPosts: 'posts/getPosts' }),
+    getPosts() {
+      this.getAllPosts()
+    }
   }
 }
 </script>
+<style scoped>
+.v-card {
+  margin-bottom: 3.2rem;
+}
+.layout {
+  max-width: 50rem;
+  margin: auto;
+  flex-wrap: wrap;
+}
+.v-input__slider {
+  width: 100%;
+}
+</style>

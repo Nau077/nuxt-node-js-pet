@@ -9,6 +9,6 @@ posts.use(cors())
 posts.get('/', postsController.getAllPosts)
 posts.put('/:id', authMiddleware, postsController.editPost)
 posts.delete('/:id', authMiddleware, postsController.deletePost)
-posts.post('/createPost', authMiddleware, postsController.createPost)
+posts.post('/createPost', postsController.createPost)
 
 module.exports = posts;

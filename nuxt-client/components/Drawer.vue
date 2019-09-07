@@ -51,6 +51,11 @@ export default {
       fixed: false,
       items: [
         {
+          icon: 'mdi-chart-bubble',
+          title: 'New post',
+          to: '/newPost'
+        },
+        {
           icon: 'mdi-apps',
           title: 'Welcome',
           to: '/'
