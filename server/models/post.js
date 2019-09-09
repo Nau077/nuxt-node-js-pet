@@ -18,10 +18,6 @@ content: {
     type: String,
     required: true
         },
-image: {
-    type: Object,
-    required: true
-}, 
 date: {
     type: Date,
     default: Date.now

@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   env: {
-    browser: true,
+    browser: false,
     node: true
   },
   parserOptions: {
@@ -19,5 +19,5 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
-  }
+    }
 }

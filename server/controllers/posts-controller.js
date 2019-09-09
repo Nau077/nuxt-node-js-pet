@@ -10,14 +10,16 @@ const getAllPosts = async (req, res) => {
 }
  
 const createPost = (req, res) => {
-  console.log(req.body)
-    Post.create(req.body)
-      .then(post => {
-        res.status(200).send(post);
-      })
-      .catch(err => {
-        res.status(401).json('error, can`t create post' + err)
-      })
+  console.log(req.body.cool_data)
+  console.log(req.files)
+    // Post.create(req.body)
+    //   .then(post => {
+    //     res.status(200).send(post);
+    //   })
+    res.status(200).send(req.files);
+      // .catch(err => {
+      //   res.status(401).json('error, can`t create post' + err)
+      // })
 }
 
 const editPost = (req, res) => {

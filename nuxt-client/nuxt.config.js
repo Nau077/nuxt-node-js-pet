@@ -75,6 +75,7 @@ export default {
       }
     }
   },
+  useEslint: false,
   /*
    ** Build configuration
    */

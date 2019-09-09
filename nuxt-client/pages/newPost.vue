@@ -77,33 +77,42 @@ export default {
   },
   methods: {
     onFileChange(event) {
-      const file = event.target.files[0]
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        this.urlImage = reader.result
-      }
-      reader.readAsDataURL(file)
-      this.image = file
+      this.image = this.$refs.fileInput.files[0]
+      // const file = event.target.files[0]
+      // eslint-disable-next-line
+     // const formData = new FormData(event.target.files[0])
+      // eslint-disable-next-line
+      // const reader = new FileReader()
+      // reader.onload = (e) => {
+      //   this.urlImage = reader.result
+      // }
+      // reader.readAsDataURL(file)
+      // this.image = formData
     },
     triggerUpload() {
       this.$refs.fileInput.click()
     },
     async createAd() {
       if (this.$refs.form.validate() && this.image) {
-        const ad = {
+        const coolData = {
           content: this.content,
           description: this.description,
           title: this.title,
-          author: this.author,
-          image: this.image
+          author: this.author
         }
-        await this.$axios.$post('/posts/createPost', ad, {
+        console.log(Object.entries(coolData))
+        const objChange = Object.entries(coolData)
+        // eslint-disable-next-line
+        let formData = new FormData();
+        // eslint-disable-next-line
+        formData.append('file', this.image)
+        formData.append('cool_data', JSON.stringify(objChange))
+        await this.$axios.$post('/posts/createPost', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         })
-        console.log(ad)
-
+        // console.log(qwer)
         // this.$store.dispatch('createAd', ad)
         //     .then(() => {
         //         this.$router.push('/list');
