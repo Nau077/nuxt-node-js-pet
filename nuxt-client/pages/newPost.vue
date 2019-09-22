@@ -3,41 +3,49 @@
     <v-layout row>
       <v-flex xs12 sm6 offset-sm3>
         <h1 class="text--secondary mb-3">Create new ad</h1>
-        <v-form ref="form" class="mb-3">
-          <!-- <input ref="author" v-model="author" type="text" />
+        <editor
+          v-model="timce"
+          api-key="bpahh2whq5379tf02ni7wxsve2xkizju6g05xyni6zt22n5k"
+          :plugins="myPlugins"
+          :toolbar="myToolbar1"
+          :init="myInit"
+        >
+          <v-form ref="form" class="mb-3">
+            <!-- <input ref="author" v-model="author" type="text" />
           <input ref="title" v-model="title" type="text" /> -->
-          <v-textarea
-            v-model="author"
-            name="author"
-            label="author"
-            type="text"
-            multi-line
-            required
-          ></v-textarea>
-          <v-textarea
-            v-model="title"
-            name="title"
-            label="title"
-            type="text"
-            multi-line
-            required
-          ></v-textarea>
-          <v-textarea
-            v-model="content"
-            name="Сontent"
-            label="Сontent"
-            type="text"
-            multi-line
-            required
-          ></v-textarea>
-          <v-textarea
-            v-model="description"
-            name="description"
-            label="Ad description"
-            type="text"
-            multi-line
-          ></v-textarea>
-        </v-form>
+            <v-textarea
+              v-model="author"
+              name="author"
+              label="author"
+              type="text"
+              multi-line
+              required
+            ></v-textarea>
+            <v-textarea
+              v-model="title"
+              name="title"
+              label="title"
+              type="text"
+              multi-line
+              required
+            ></v-textarea>
+            <v-textarea
+              v-model="content"
+              name="Сontent"
+              label="Сontent"
+              type="text"
+              multi-line
+              required
+            ></v-textarea>
+            <v-textarea
+              v-model="description"
+              name="description"
+              label="Ad description"
+              type="text"
+              multi-line
+            ></v-textarea>
+          </v-form>
+        </editor>
         <v-layout row class="mb-3">
           <v-flex xs12>
             <v-btn class="warning" @click="triggerUpload">
@@ -65,14 +73,27 @@
   </v-container>
 </template>
 <script>
+import Editor from '@tinymce/tinymce-vue'
+
 export default {
+  components: {
+    editor: Editor // <- Important part
+  },
   data() {
     return {
       title: '',
       description: '',
       author: '',
       content: '',
-      image: ''
+      image: '',
+      timce: null,
+      myToolbar1:
+        'undo redo | bold italic underline preview | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+      myPlugins: 'link image code preview imagetools',
+      myInit: {
+        automatic_uploads: false,
+        images_upload_url: 'http://localhost:4000/posts/createPost'
+      }
     }
   },
   methods: {
@@ -91,6 +112,7 @@ export default {
     },
     triggerUpload() {
       this.$refs.fileInput.click()
+      console.log(this.timce)
     },
     async createAd() {
       if (this.$refs.form.validate() && this.image) {

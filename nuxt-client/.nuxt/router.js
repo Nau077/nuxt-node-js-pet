@@ -3,9 +3,9 @@ import Router from 'vue-router'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _13ad32f5 = () => interopDefault(import('..\\pages\\inspire.vue' /* webpackChunkName: "pages_inspire" */))
-const _0b2d190a = () => interopDefault(import('..\\pages\\newPost.vue' /* webpackChunkName: "pages_newPost" */))
-const _1576f1ad = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
+const _143e7208 = () => interopDefault(import('..\\pages\\inspire.vue' /* webpackChunkName: "pages_inspire" */))
+const _46c5f0fc = () => interopDefault(import('..\\pages\\newPost.vue' /* webpackChunkName: "pages_newPost" */))
+const _24844918 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 
 Vue.use(Router)
 
@@ -18,15 +18,15 @@ export const routerOptions = {
 
   routes: [{
       path: "/inspire",
-      component: _13ad32f5,
+      component: _143e7208,
       name: "inspire"
     }, {
       path: "/newPost",
-      component: _0b2d190a,
+      component: _46c5f0fc,
       name: "newPost"
     }, {
       path: "/",
-      component: _1576f1ad,
+      component: _24844918,
       name: "index"
     }],
 
