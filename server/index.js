@@ -13,6 +13,7 @@ app.use(fileUpload());
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+app.use(express.static('images'));
 
 
 mongoose.connect( config.mongoURI, { useNewUrlParser: true })

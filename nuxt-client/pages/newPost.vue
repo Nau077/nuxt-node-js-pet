@@ -91,8 +91,8 @@ export default {
         'undo redo | bold italic underline preview | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
       myPlugins: 'link image code preview imagetools',
       myInit: {
-        automatic_uploads: false,
-        images_upload_url: 'http://localhost:4000/posts/createPost'
+        automatic_uploads: true,
+        images_upload_url: 'http://localhost:4000/posts/writeImage'
       }
     }
   },
