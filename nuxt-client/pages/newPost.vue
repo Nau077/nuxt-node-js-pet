@@ -77,7 +77,7 @@ import Editor from '@tinymce/tinymce-vue'
 
 export default {
   components: {
-    editor: Editor // <- Important part
+    editor: Editor
   },
   data() {
     return {

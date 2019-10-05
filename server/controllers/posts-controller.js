@@ -1,3 +1,4 @@
+const uuid = require('uuid');
 const Post = require('../models/post')
 const fs = require("fs");
 const path = require('path');
@@ -19,12 +20,14 @@ function decodeBase64Image(dataString) {
 
 const writeImageFromPost = async (req, res) => {
     const image = req.files.file.data
-    fs.writeFile(`images/${req.files.file.name}`, image, function(err){
+    const imageName = uuid() + req.files.file.name.split(' ').join('')
+    fs.writeFile(`images/${imageName}`, image, function(err){
       console.error(err)
     });
     const imgUrl = {
-      location: `http://localhost:4000/${req.files.file.name}`
+      location: `http://localhost:4000/${imageName}`
     }
+    console.log(imgUrl.location)
     try {
        await res.status(200).send(imgUrl);
     } catch (error) {
