@@ -4,30 +4,17 @@ const fs = require("fs");
 const path = require('path');
 // дополнить отправку запросов такого рода res.status(200).json(postsFind) *fix
 
-function decodeBase64Image(dataString) {
- const matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
-    response = {};
-
-  if (matches.length !== 3) {
-    return new Error('Invalid input string');
-  }
-
-  response.type = matches[1];
-  response.data = new Buffer(matches[2], 'base64');
-
-  return response;
+function generateImgUrl(req) {
+  const image = req.files.file.data
+  const imageName = uuid() + req.files.file.name.split(' ').join('')
+  fs.writeFile(`images/${imageName}`, image, function(err){
+    console.error(err)
+  });
+  return { location: `http://localhost:4000/${imageName}` }
 }
 
 const writeImageFromPost = async (req, res) => {
-    const image = req.files.file.data
-    const imageName = uuid() + req.files.file.name.split(' ').join('')
-    fs.writeFile(`images/${imageName}`, image, function(err){
-      console.error(err)
-    });
-    const imgUrl = {
-      location: `http://localhost:4000/${imageName}`
-    }
-    console.log(imgUrl.location)
+  const imgUrl = generateImgUrl(req)
     try {
        await res.status(200).send(imgUrl);
     } catch (error) {
@@ -44,22 +31,20 @@ const getAllPosts = async (req, res) => {
   }
 }
  
-const createPost = (req, res) => {
-  // console.log(req.body.cool_data)
-  console.log(req.files)
-    // Post.create(req.body)
-    //   .then(post => {
-    //     res.status(200).send(post);
-    //   })
-    
-    imgUrl ={ location : 'https://timesofindia.indiatimes.com/thumb/msid-70143101,imgsize-1269404,width-800,height-600,resizemode-4/70143101.jpg'}
-    
-    let newFile = JSON.stringify(imgUrl)
-    console.log()
-    res.status(200).send(newFile);
-      // .catch(err => {
-      //   res.status(401).json('error, can`t create post' + err)
-      // })
+const createPost = async (req, res) => {
+  const imgUrl = generateImgUrl(req)
+  const dataArr = JSON.parse(req.body.cool_data)
+  const postObj = dataArr.reduce((acc, [k, v]) => ({
+    ...acc, [k]: v
+  }), {})  
+  postObj.imgUrl = imgUrl.location
+
+  await Post.create(postObj)
+  try {
+    await res.status(200).send('post was successfully created');
+  } catch (err) {
+    res.status(401).json('error, could`nt create post' + err)
+  }
 }
 
 const editPost = (req, res) => {

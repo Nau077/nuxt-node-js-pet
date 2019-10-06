@@ -3,6 +3,39 @@
     <v-layout row>
       <v-flex xs12 sm6 offset-sm3>
         <h1 class="text--secondary mb-3">Create new ad</h1>
+        <v-form ref="form" class="mb-3">
+          <!-- <input ref="author" v-model="author" type="text" />
+          <input ref="title" v-model="title" type="text" /> -->
+          <v-textarea
+            v-model="title"
+            name="title"
+            label="title"
+            type="text"
+            multi-line
+            required
+          ></v-textarea>
+          <v-textarea
+            v-model="description"
+            name="description"
+            label="Ad description"
+            type="text"
+            multi-line
+          ></v-textarea>
+          <v-layout row class="mb-3">
+            <v-flex xs12>
+              <v-btn class="warning" @click="triggerUpload">
+                Upload
+                <!-- <v-icon right dark>cloud_upload</v-icon> -->
+              </v-btn>
+              <input
+                ref="fileInput"
+                type="file"
+                accept="image/*"
+                @change="onFileChange"
+              />
+            </v-flex>
+          </v-layout>
+        </v-form>
         <editor
           v-model="timce"
           api-key="bpahh2whq5379tf02ni7wxsve2xkizju6g05xyni6zt22n5k"
@@ -10,56 +43,7 @@
           :toolbar="myToolbar1"
           :init="myInit"
         >
-          <v-form ref="form" class="mb-3">
-            <!-- <input ref="author" v-model="author" type="text" />
-          <input ref="title" v-model="title" type="text" /> -->
-            <v-textarea
-              v-model="author"
-              name="author"
-              label="author"
-              type="text"
-              multi-line
-              required
-            ></v-textarea>
-            <v-textarea
-              v-model="title"
-              name="title"
-              label="title"
-              type="text"
-              multi-line
-              required
-            ></v-textarea>
-            <v-textarea
-              v-model="content"
-              name="Сontent"
-              label="Сontent"
-              type="text"
-              multi-line
-              required
-            ></v-textarea>
-            <v-textarea
-              v-model="description"
-              name="description"
-              label="Ad description"
-              type="text"
-              multi-line
-            ></v-textarea>
-          </v-form>
         </editor>
-        <v-layout row class="mb-3">
-          <v-flex xs12>
-            <v-btn class="warning" @click="triggerUpload">
-              Upload
-              <!-- <v-icon right dark>cloud_upload</v-icon> -->
-            </v-btn>
-            <input
-              ref="fileInput"
-              type="file"
-              accept="image/*"
-              @change="onFileChange"
-            />
-          </v-flex>
-        </v-layout>
         <v-layout row>
           <v-flex xs12>
             <v-spacer></v-spacer>
@@ -83,8 +67,6 @@ export default {
     return {
       title: '',
       description: '',
-      author: '',
-      content: '',
       image: '',
       timce: null,
       myToolbar1:
@@ -99,30 +81,27 @@ export default {
   methods: {
     onFileChange(event) {
       this.image = this.$refs.fileInput.files[0]
-      // const file = event.target.files[0]
-      // eslint-disable-next-line
-     // const formData = new FormData(event.target.files[0])
-      // eslint-disable-next-line
-      // const reader = new FileReader()
-      // reader.onload = (e) => {
-      //   this.urlImage = reader.result
-      // }
-      // reader.readAsDataURL(file)
-      // this.image = formData
+      //   const file = event.target.files[0]
+      //   // eslint-disable-next-line
+      //  const formData = new FormData(event.target.files[0])
+      //   // eslint-disable-next-line
+      //   const reader = new FileReader()
+      //   reader.onload = (e) => {
+      //     this.urlImage = reader.result
+      //   }
+      //   reader.readAsDataURL(file)
+      //   this.image = formData
     },
     triggerUpload() {
       this.$refs.fileInput.click()
-      console.log(this.timce)
     },
     async createAd() {
       if (this.$refs.form.validate() && this.image) {
         const coolData = {
-          content: this.content,
           description: this.description,
           title: this.title,
-          author: this.author
+          tinyMce: this.timce
         }
-        console.log(Object.entries(coolData))
         const objChange = Object.entries(coolData)
         // eslint-disable-next-line
         let formData = new FormData();
@@ -134,12 +113,6 @@ export default {
             'Content-Type': 'multipart/form-data'
           }
         })
-        // console.log(qwer)
-        // this.$store.dispatch('createAd', ad)
-        //     .then(() => {
-        //         this.$router.push('/list');
-        //     })
-        //     .catch(() => {});
       }
     }
   }
