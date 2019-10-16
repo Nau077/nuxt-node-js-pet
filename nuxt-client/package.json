@@ -16,7 +16,11 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/pwa": "^3.0.0-0",
     "@tinymce/tinymce-vue": "^3.0.1",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.0.0",
+    "pug": "^2.0.4",
+    "pug-plain-loader": "^1.0.0",
+    "sass": "^1.23.0",
+    "sass-loader": "^8.0.0"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.0.0",

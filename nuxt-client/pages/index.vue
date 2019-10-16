@@ -1,77 +1,32 @@
-<template>
-  <v-container>
-    <v-layout justify-center align-center>
-      <v-flex v-for="(post, index) in posts" :key="index">
-        <v-card
-          class="mx-auto"
-          :flat="flat"
-          :loading="loading"
-          :outlined="outlined"
-          :elevation="elevation"
-          :raised="raised"
-          :width="width"
-          :height="height"
-        >
-          <v-img
-            v-if="media"
-            class="white--text"
-            height="200px"
-            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-          >
-            <v-card-title class="align-end fill-height">
-              I'm a title
-            </v-card-title>
-          </v-img>
-          <v-card-title v-else>
-            I'm a title
-          </v-card-title>
-          <v-card-text>{{ post.text }}</v-card-text>
-          <v-card-actions v-if="actions">
-            <v-btn outlined>
-              Click
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-flex>
-    </v-layout>
-    <v-layout justify-center align-center>
-      <v-flex v-for="(post, index) in postsMain" :key="index">
-        <v-card
-          class="mx-auto"
-          :flat="flat"
-          :loading="loading"
-          :outlined="outlined"
-          :elevation="elevation"
-          :raised="raised"
-          :width-main="widthMain"
-          :height="height"
-        >
-          <v-img
-            v-if="media"
-            class="white--text"
-            height="200px"
-            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-          >
-            <v-card-title class="align-end fill-height">
-              I'm a title
-            </v-card-title>
-          </v-img>
-          <v-card-title v-else>
-            I'm a title
-          </v-card-title>
-          <v-card-text>{{ post.text }}</v-card-text>
-          <v-card-actions v-if="actions">
-            <v-btn outlined>
-              Click
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
+<template lang="pug">
+ v-container
+  v-layout(justify-center='' align-center='')
+    v-flex(v-for='(post, index) in posts' :key='index')
+      v-card.mx-auto(:flat='flat' :loading='loading' :outlined='outlined' :elevation='elevation' :raised='raised' :width='width' :height='height')
+        v-img.white--text(v-if='media' height='200px' :src="post.imgUrl")
+          v-card-title.align-end.fill-height
+            | I&apos;m a title
+        v-card-title(v-else='')
+          | I&apos; {{ post.title }}
+        v-card-text {{ post.description }}
+        v-card-actions(v-if='actions')
+          v-btn(outlined='' @click.prevent="openPost(post)")
+            | Click
+  v-layout(justify-center='' align-center='')
+    v-flex(v-for='(post, _id) in posts' :key='_id')
+      v-card.mx-auto(:flat='flat' :loading='loading' :outlined='outlined' :elevation='elevation' :raised='raised' :width-main='widthMain' :height='height')
+        v-img.white--text(v-if='media' height='200px' :src="post.imgUrl")
+          v-card-title.align-end.fill-height
+            | I&apos; {{ post.title }}
+        v-card-title(v-else='')
+          | I&apos;m a title
+        v-card-text {{ post.description }}
+        v-card-actions(v-if='actions')
+          v-btn(outlined='' @click.prevent="openPost(post)")
+            | Click
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   data: () => ({
     flat: false,
@@ -83,44 +38,27 @@ export default {
     raised: false,
     width: 344,
     widthMain: 600,
-    height: undefined,
-    posts: [
-      {
-        text: 111
-      },
-      {
-        text: 222
-      },
-      {
-        text: 333
-      },
-      {
-        text: 444
-      }
-    ],
-    postsMain: [
-      {
-        text: 111
-      },
-      {
-        text: 333
-      },
-      {
-        text: 444
-      }
-    ]
+    height: undefined
   }),
-  mounted() {
-    this.getPosts()
+  computed: {
+    ...mapGetters({ loadedPosts: 'posts/posts' }),
+    posts() {
+      return this.loadedPosts
+    }
   },
   // async asyncData({$axios, params}) {
   //   const user = await $axios.$get('https://jsonplaceholder.typicode.com/users/' + params.id)
   //   return {user}
   // },
+  async fetch({ store }) {
+    if (store.getters['posts/posts'].length === 0) {
+      await store.dispatch('posts/getPosts')
+    }
+  },
   methods: {
     ...mapActions({ getAllPosts: 'posts/getPosts' }),
-    getPosts() {
-      this.getAllPosts()
+    openPost(post) {
+      this.$router.push('/posts/' + post._id, post)
     }
   }
 }
