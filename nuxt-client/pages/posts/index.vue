@@ -34,10 +34,6 @@ export default {
       return this.loadedPosts
     }
   },
-  // async asyncData({$axios, params}) {
-  //   const user = await $axios.$get('https://jsonplaceholder.typicode.com/users/' + params.id)
-  //   return {user}
-  // },
   async fetch({ store }) {
     if (store.getters['posts/posts'].length === 0) {
       await store.dispatch('posts/getPosts')
@@ -46,7 +42,7 @@ export default {
   methods: {
     ...mapActions({ getAllPosts: 'posts/getPosts' }),
     openPost(post) {
-      this.$router.push('/posts/' + post._id, post)
+      this.$router.push('/posts/' + post._id)
     }
   }
 }

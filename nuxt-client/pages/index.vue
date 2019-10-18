@@ -5,7 +5,7 @@
       v-card.mx-auto(:flat='flat' :loading='loading' :outlined='outlined' :elevation='elevation' :raised='raised' :width='width' :height='height')
         v-img.white--text(v-if='media' height='200px' :src="post.imgUrl")
           v-card-title.align-end.fill-height
-            | I&apos;m a title
+            | &apos; {{ post.title }}
         v-card-title(v-else='')
           | I&apos; {{ post.title }}
         v-card-text {{ post.description }}
@@ -22,8 +22,8 @@
           | I&apos;m a title
         v-card-text {{ post.description }}
         v-card-actions(v-if='actions')
-          v-btn(outlined='')
-            nuxt-link(:to="{ path: '/posts/' + post._id, params: {post: '123'}}") Click
+            v-btn(outlined='' @click.prevent="openPost(post)")
+              | Click
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
@@ -55,8 +55,7 @@ export default {
     ...mapActions({ getAllPosts: 'posts/getPosts' }),
     openPost(post) {
       this.$router.push({
-        path: '/posts/' + post._id,
-        params: { post: '123' }
+        path: '/posts/' + post._id
       })
     }
   }

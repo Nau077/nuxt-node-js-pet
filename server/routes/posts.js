@@ -7,7 +7,7 @@ const authMiddleware = require('../middleware/admin-auth-middleware')
 posts.use(cors())
 
 posts.get('/', postsController.getAllPosts)
-posts.get('/:id', postsController.getPost)
+posts.get('/post/:id', postsController.getPost)
 posts.put('/:id', authMiddleware, postsController.editPost)
 posts.delete('/:id', authMiddleware, postsController.deletePost)
 posts.post('/createPost', postsController.createPost)
