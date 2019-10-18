@@ -22,8 +22,8 @@
           | I&apos;m a title
         v-card-text {{ post.description }}
         v-card-actions(v-if='actions')
-          v-btn(outlined='' @click.prevent="openPost(post)")
-            | Click
+          v-btn(outlined='')
+            nuxt-link(:to="{ path: '/posts/' + post._id, params: {post: '123'}}") Click
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
@@ -46,10 +46,6 @@ export default {
       return this.loadedPosts
     }
   },
-  // async asyncData({$axios, params}) {
-  //   const user = await $axios.$get('https://jsonplaceholder.typicode.com/users/' + params.id)
-  //   return {user}
-  // },
   async fetch({ store }) {
     if (store.getters['posts/posts'].length === 0) {
       await store.dispatch('posts/getPosts')
@@ -58,7 +54,10 @@ export default {
   methods: {
     ...mapActions({ getAllPosts: 'posts/getPosts' }),
     openPost(post) {
-      this.$router.push('/posts/' + post._id, post)
+      this.$router.push({
+        path: '/posts/' + post._id,
+        params: { post: '123' }
+      })
     }
   }
 }

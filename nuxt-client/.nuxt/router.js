@@ -5,6 +5,7 @@ import scrollBehavior from './router.scrollBehavior.js'
 
 const _13ad32f5 = () => interopDefault(import('..\\pages\\inspire.vue' /* webpackChunkName: "pages_inspire" */))
 const _0b2d190a = () => interopDefault(import('..\\pages\\newPost.vue' /* webpackChunkName: "pages_newPost" */))
+const _82dbeed8 = () => interopDefault(import('..\\pages\\posts\\index.vue' /* webpackChunkName: "pages_posts_index" */))
 const _66711ffc = () => interopDefault(import('..\\pages\\posts\\_id.vue' /* webpackChunkName: "pages_posts__id" */))
 const _1576f1ad = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 
@@ -26,7 +27,11 @@ export const routerOptions = {
       component: _0b2d190a,
       name: "newPost"
     }, {
-      path: "/posts/:id?",
+      path: "/posts",
+      component: _82dbeed8,
+      name: "posts"
+    }, {
+      path: "/posts/:id",
       component: _66711ffc,
       name: "posts-id"
     }, {

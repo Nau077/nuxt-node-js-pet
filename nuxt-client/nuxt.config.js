@@ -37,7 +37,16 @@ export default {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    // Simple usage
+    '@nuxtjs/router-extras',
+    // With options
+    [
+      '@nuxtjs/router-extras',
+      {
+        /* module options */
+      }
+    ]
   ],
   /*
    ** Nuxt.js modules

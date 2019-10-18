@@ -47,6 +47,15 @@ const createPost = async (req, res) => {
   }
 }
 
+const getPost = async (req, res) => {
+  const post = await Post.findOne({_id: req.params.id})
+  try {
+    await res.status(200).json(post)
+  } catch (err) {
+    res.status(401).json('error, can`t send one post' + err)
+  }
+}
+
 const editPost = (req, res) => {
     Post.findByIdAndUpdate({_id: req.params.id}, req.body)
       .then(() => {
@@ -72,6 +81,7 @@ const editPost = (req, res) => {
 
   module.exports = {
     createPost,
+    getPost,
     deletePost,
     editPost,
     getAllPosts,
