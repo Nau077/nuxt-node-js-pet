@@ -8,15 +8,16 @@ export const state = () => ({
 })
 
 export const mutations = {
-  setPosts(state, posts) {
-    state.posts = posts
+  setTokens(state, { accessToken, refreshToken }) {
+    state.token = accessToken
+    state.refreshToken = refreshToken
   }
 }
 
 export const actions = {
-  async getPosts({ commit }) {
-    const posts = await this.$axios.$get('/posts')
-    commit('setPosts', posts)
+  async loginAdmin({ commit }, admin) {
+    const tokens = await this.$axios.$post('/admins/login', admin)
+    commit('setTokens', tokens)
   }
 }
 

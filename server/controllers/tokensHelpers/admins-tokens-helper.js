@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { secret, tokens} = require ('../../config/config').jwtAdmin;
 const mongoose = require('mongoose')
+const uuid = require('uuid')
 const Token = mongoose.model('adminToken');
 mongoose.set('useFindAndModify', false);
 
@@ -19,6 +20,7 @@ const generateRefreshToken = data => {
         first_name: data.first_name,
         last_name: data.last_name,
         email: data.email,
+        uniq: uuid(),
         type: tokens.refresh.type,
     };
     const options = { expiresIn: tokens.refresh.expireIn };

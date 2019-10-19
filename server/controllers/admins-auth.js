@@ -18,6 +18,7 @@ const updateTokens = (payload, res) => {
 };
 const register = (req, res) => {
         const today = new Date()
+
         const adminData = {
           first_name: req.body.first_name,
           last_name: req.body.last_name,
@@ -52,7 +53,7 @@ const register = (req, res) => {
 
 const login = (req, res) => {
         Admin.findOne({
-          email: req.body.email
+          first_name: req.body.name
         })
         .exec()
           .then(admin => {
@@ -82,11 +83,13 @@ const login = (req, res) => {
         }
 
 
-const refreshTokens = (req, res) => {
+const refreshTokens = async (req, res) => {
   const { refreshToken } = req.body;
+
   let payload;
+
   try {
-      payload = jwt.verify(refreshToken, secret)
+      payload = jwt.verify(refreshToken, jwtSecret)
       if (payload.type !== 'refresh') {
           res.status(400).json({ message: 'Invalid token!' })
           return
@@ -100,14 +103,13 @@ const refreshTokens = (req, res) => {
           return
       }
   }
-  Token.findOne({tokenId: payload.id})
-      .exec()
-      .then((token) => {
+  const token = await Token.findOne({tokenId: payload._id})
           if (token === null) {
               throw new Error('Invalid token!')
           }
-          return updateTokens(token.userId)
-      })
+
+   await Admin.findOne({_id: token.adminId}) 
+      .then(data => updateTokens(data, res))     
       .then(tokens => res.json(tokens))
       .catch(err => res.status(400).json({ message: err.massage}));
 };

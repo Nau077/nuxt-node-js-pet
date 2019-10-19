@@ -8,20 +8,8 @@
     <div v-html="post.tinyMce"></div>
 </template>
 <script>
-// import { mapGetters } from 'vuex'
 export default {
-  // data: () => ({
-  //   id: null
-  // }),
-  // mounted() {
-  //   this.id = this.$route.params.id
-  // },
   computed: {
-    // ...mapGetters({ posts: 'posts/posts' }),
-    // post() {
-    //   if (!this.posts) return null
-    //   return this.posts.find((el) => el._id === this.id)
-    // },
     tinyMce() {
       return JSON.parse(this.post.tinyMce)
     }

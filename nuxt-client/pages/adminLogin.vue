@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   data() {
     return {
@@ -41,14 +43,14 @@ export default {
     }
   },
   methods: {
+    ...mapActions({ loginAdmin: 'adminAuth/loginAdmin' }),
     onSubmit() {
       if (this.$refs.form.validate()) {
         const admin = {
           name: this.name,
           password: this.password
         }
-        this.$store
-          .dispatch('loginAdmin', admin)
+        this.loginAdmin(admin)
           .then(() => {
             this.$router.push('/')
           })

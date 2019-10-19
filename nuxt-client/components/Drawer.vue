@@ -6,7 +6,8 @@
         v-toolbar-title(v-text='title')
         v-spacer
         v-toolbar-items
-          v-btn(text='') Войти admin
+          v-btn(text='') 
+            nuxt-link(class='v-btn__content' to="/adminLogin") Войти admin
           v-btn(text='') Войти user
           v-btn(text='') Регистрация
           v-btn(icon='', @click.stop='rightDrawer = !rightDrawer')
@@ -52,3 +53,9 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+a.v-btn__content {
+  color: #ffffff;
+  text-decoration: none;
+}
+</style>

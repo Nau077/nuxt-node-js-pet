@@ -10,7 +10,7 @@ posts.get('/', postsController.getAllPosts)
 posts.get('/post/:id', postsController.getPost)
 posts.put('/:id', authMiddleware, postsController.editPost)
 posts.delete('/:id', authMiddleware, postsController.deletePost)
-posts.post('/createPost', postsController.createPost)
-posts.post('/writeImage', postsController.writeImageFromPost)
+posts.post('/createPost', authMiddleware, postsController.createPost)
+posts.post('/writeImage', authMiddleware, postsController.writeImageFromPost)
 
 module.exports = posts;
