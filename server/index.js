@@ -16,12 +16,12 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 app.use(express.static('images'));
 
 
-mongoose.connect( config.mongoURI, { useNewUrlParser: true })
-  .then(() => console.log('MongoDB Connected'))
-  .then( app.listen(config.port, function() {
-    console.log('Server is running on port: ' + config.port)
-  }))
-  .catch(err => console.log(err))
+mongoose.connect(config.mongoURI, { useNewUrlParser: true })
+    .then(() => console.log('MongoDB Connected'))
+    .then(app.listen(config.port, function() {
+        console.log('Server is running on port: ' + config.port)
+    }))
+    .catch(err => console.log(err))
 
 app.use(bodyParser.json());
 
@@ -30,3 +30,4 @@ app.use('/posts', posts)
 app.use('/admins', admins)
 
 //  ./mongod.exe
+// "eslint": "node_modules/.bin/eslint routes/

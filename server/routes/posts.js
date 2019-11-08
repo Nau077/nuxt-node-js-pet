@@ -13,4 +13,4 @@ posts.delete('/:id', authMiddleware, postsController.deletePost)
 posts.post('/createPost', authMiddleware, postsController.createPost)
 posts.post('/writeImage', authMiddleware, postsController.writeImageFromPost)
 
-module.exports = posts;
+module.exports = posts
